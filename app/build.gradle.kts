@@ -2,7 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.ksp)
 }
-
+// Configura cómo se construye la aplicación: su identidad, las versiones de
+//     Android compatibles, los tipos de compilación y funciones adicionales como ViewBinding.
 android {
     namespace = "com.karen.nova"
     compileSdk {

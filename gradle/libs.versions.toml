@@ -1,3 +1,7 @@
+# Catalogo de herramientas externas con sus versiones.
+# Centraliza en un solo archivo todas las dependencias
+# y sus versiones para actualizarlas fácil y evitar conflictos
+
 [versions]
 agp = "9.4.1"
 coreKtx = "1.19.1"
@@ -36,4 +40,5 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+
 
