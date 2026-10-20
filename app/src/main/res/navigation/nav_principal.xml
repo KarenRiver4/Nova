@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_principal"
+    app:startDestination="@id/inicioSesionFragment">
+
+    <!-- Pantalla de inicio de sesión: es la primera que se muestra -->
+    <fragment
+        android:id="@+id/inicioSesionFragment"
+        android:name="com.karen.nova.ui.autenticacion.InicioSesionFragment"
+        android:label="Iniciar sesión"
+        tools:layout="@layout/fragment_inicio_sesion">
+
+        <!-- Flecha: "¿No tienes cuenta? Regístrate" -->
+        <action
+            android:id="@+id/accion_inicioSesion_a_registro"
+            app:destination="@id/registroFragment" />
+
+        <!-- Flecha: "Ingresar". Borra el login del historial -->
+        <action
+            android:id="@+id/accion_inicioSesion_a_lista"
+            app:destination="@id/listaGastosFragment"
+            app:popUpTo="@id/nav_principal"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Pantalla de registro -->
+    <fragment
+        android:id="@+id/registroFragment"
+        android:name="com.karen.nova.ui.autenticacion.RegistroFragment"
+        android:label="Registro"
+        tools:layout="@layout/fragment_registro" />
+
+    <!-- Pantalla de la lista de gastos -->
+    <fragment
+        android:id="@+id/listaGastosFragment"
+        android:name="com.karen.nova.ui.lista.ListaGastosFragment"
+        android:label="Mis gastos"
+        tools:layout="@layout/fragment_lista_gastos">
+
+        <!-- Flecha: "Salir". Borra la lista del historial -->
+        <action
+            android:id="@+id/accion_lista_a_inicioSesion"
+            app:destination="@id/inicioSesionFragment"
+            app:popUpTo="@id/nav_principal"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>

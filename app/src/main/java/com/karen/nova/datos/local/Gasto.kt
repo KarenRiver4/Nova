@@ -19,16 +19,17 @@ import androidx.room.PrimaryKey
             onDelete = ForeignKey.CASCADE
         )
     ],
-    // Hace más rápidas las búsquedas de "los gastos de este usuario"
+    // Hace más rápidas las búsquedas de los gastos de ese usuario"
     indices = [Index(value = ["usuarioId"])]
 )
 data class Gasto(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
 
-    // El id del usuario dueño de este gasto
+    // El id del usuario dueño del gasto.
     val usuarioId: Long,
 
+    // Descripción del gasto.
     val concepto: String,
 
     // En pesos, sin centavos.
@@ -36,7 +37,7 @@ data class Gasto(
 
     val categoria: String,
 
-    // Fecha del gasto en milisegundos
+    // Fecha del gasto en milisegundos.
     val fecha: Long,
 
     val metodoPago: String,

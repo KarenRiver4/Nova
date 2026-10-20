@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.ksp)
 }
 // Configura cómo se construye la aplicación: su identidad, las versiones de
-//     Android compatibles, los tipos de compilación y funciones adicionales como ViewBinding.
+// Android compatibles, los tipos de compilación y funciones adicionales como ViewBinding.
 android {
     namespace = "com.karen.nova"
     compileSdk {
@@ -37,6 +37,7 @@ android {
     }
 }
 
+// Herramientas externas que usa el proyecto, indica que librerias se usa y como se usan.
 dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
