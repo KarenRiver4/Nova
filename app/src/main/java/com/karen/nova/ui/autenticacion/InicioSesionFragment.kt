@@ -29,8 +29,10 @@ class InicioSesionFragment : Fragment(R.layout.fragment_inicio_sesion) {
             )
         }
 
-        // Al tocar "Regístrate", vamos a la pantalla de registro
+        // Al tocar "Regístrate", limpiamos el formulario y vamos al registro
         binding.textoIrARegistro.setOnClickListener {
+            limpiarFormulario()
+            viewModel.reiniciarEstadoInicioSesion()
             findNavController().navigate(R.id.accion_inicioSesion_a_registro)
         }
 
@@ -66,6 +68,14 @@ class InicioSesionFragment : Fragment(R.layout.fragment_inicio_sesion) {
                 findNavController().navigate(R.id.accion_inicioSesion_a_lista)
             }
         }
+    }
+
+    /** Borra lo escrito y los errores, para que el formulario quede limpio al volver. */
+    private fun limpiarFormulario() {
+        binding.campoCorreo.text?.clear()
+        binding.campoContrasena.text?.clear()
+        binding.layoutCorreo.error = null
+        binding.layoutContrasena.error = null
     }
 
     override fun onDestroyView() {
