@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Paleta de Nova -->
+    <color name="morado_principal">#6A3FB5</color>
+    <color name="morado_suave">#E9E0F8</color>
+    <color name="fondo_nova">#F8F6FC</color>
+    <color name="texto_nova">#1D1B20</color>
+    <color name="error_nova">#B3261E</color>
 </resources>
