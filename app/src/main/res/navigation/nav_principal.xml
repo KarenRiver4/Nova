@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_principal"
-    app:startDestination="@id/registroFragment">
+    app:startDestination="@id/inicioSesionFragment">
 
     <!-- Pantalla de inicio de sesión: es la primera que se muestra -->
     <fragment
