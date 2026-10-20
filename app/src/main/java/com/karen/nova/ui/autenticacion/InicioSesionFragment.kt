@@ -20,6 +20,11 @@ class InicioSesionFragment : Fragment(R.layout.fragment_inicio_sesion) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentInicioSesionBinding.bind(view)
+        // Si ya hay sesión guardada, vamos directo a la lista
+        if (viewModel.haySesionActiva()) {
+            findNavController().navigate(R.id.accion_inicioSesion_a_lista)
+            return
+        }
 
         // Al tocar "Ingresar", enviamos los datos al ViewModel
         binding.botonIngresar.setOnClickListener {

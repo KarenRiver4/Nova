@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/fondo_nova"
+    android:orientation="vertical">
 
+    <!-- Barra superior morada con el título y "Salir" -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/barra_superior"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/morado_principal"
+        android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar"
+        app:menu="@menu/menu_lista"
+        app:title="Mis gastos"
+        app:titleTextColor="@android:color/white" />
+
+    <!-- Contenido provisional: en la Fase 4 aquí irá la lista real -->
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Pantalla: Lista de gastos"
-        android:textSize="20sp" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Aquí irá tu lista de gastos"
+        android:textColor="@color/texto_nova"
+        android:textSize="18sp" />
 
-</FrameLayout>
+</LinearLayout>

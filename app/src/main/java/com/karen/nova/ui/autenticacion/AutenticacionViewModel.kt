@@ -21,6 +21,8 @@ class AutenticacionViewModel(application: Application) : AndroidViewModel(applic
         BaseDatosNova.obtenerInstancia(application).usuarioDao()
     )
     private val gestorSesion = GestorSesion(application)
+    /** Responde si ya hay alguien con la sesión iniciada. */
+    fun haySesionActiva(): Boolean = gestorSesion.haySesionActiva()
 
     // ---------- REGISTRO ----------
 
