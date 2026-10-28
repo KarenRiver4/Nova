@@ -6,7 +6,7 @@
     android:background="@color/fondo_nova"
     android:orientation="vertical">
 
-    <!-- Barra superior morada con el título y "Salir" -->
+    <!-- Barra superior -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/barra_superior"
         android:layout_width="match_parent"
@@ -17,14 +17,102 @@
         app:title="Mis gastos"
         app:titleTextColor="@android:color/white" />
 
-    <!-- Contenido provisional: en la Fase 4 aquí irá la lista real -->
-    <TextView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="Aquí irá tu lista de gastos"
-        android:textColor="@color/texto_nova"
-        android:textSize="18sp" />
+        android:layout_weight="1">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp">
+
+            <!-- Tarjeta del total del mes -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total del mes"
+                        android:textColor="#5F5E5A"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/texto_total"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="$0"
+                        android:textColor="@color/morado_principal"
+                        android:textSize="26sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- La lista de gastos -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lista_gastos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="96dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </LinearLayout>
+
+        <!-- Estado vacío: se muestra cuando no hay gastos -->
+        <LinearLayout
+            android:id="@+id/estado_vacio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aún no tienes gastos registrados"
+                android:textColor="@color/texto_nova"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Toca + para agregar el primero"
+                android:textColor="#5F5E5A"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Botón flotante para agregar un gasto -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/boton_agregar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="24dp"
+            android:contentDescription="Agregar gasto"
+            android:src="@drawable/ic_agregar"
+            app:backgroundTint="@color/morado_principal"
+            app:tint="@android:color/white" />
+
+    </FrameLayout>
 </LinearLayout>

@@ -2,14 +2,17 @@ package com.karen.nova.ui.lista
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.karen.nova.R
 import com.karen.nova.databinding.FragmentListaGastosBinding
+import com.karen.nova.utilidades.Formato
 
-/** Pantalla de la lista de gastos (por ahora con la barra y el botón Salir). */
+/** Pantalla con la lista de gastos, el total del mes y el botón para agregar. */
 class ListaGastosFragment : Fragment(R.layout.fragment_lista_gastos) {
 
     private var _binding: FragmentListaGastosBinding? = null
@@ -17,11 +20,34 @@ class ListaGastosFragment : Fragment(R.layout.fragment_lista_gastos) {
 
     private val viewModel: ListaGastosViewModel by viewModels()
 
+    private val adaptador = AdaptadorGastos { gasto ->
+        // Parte 3: aquí iremos al detalle del gasto
+        Toast.makeText(requireContext(), "Detalle de: ${gasto.concepto}", Toast.LENGTH_SHORT).show()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentListaGastosBinding.bind(view)
 
-        // Cuando tocan una opción del menú de la barra
+        binding.listaGastos.adapter = adaptador
+
+        // Cada vez que cambian los gastos, actualizamos la lista y el estado vacío
+        viewModel.gastos.observe(viewLifecycleOwner) { lista ->
+            adaptador.submitList(lista)
+            binding.estadoVacio.isVisible = lista.isEmpty()
+            binding.listaGastos.isVisible = lista.isNotEmpty()
+        }
+
+        // Cada vez que cambia el total, lo mostramos con formato de dinero
+        viewModel.totalDelMes.observe(viewLifecycleOwner) { total ->
+            binding.textoTotal.text = Formato.dinero(total)
+        }
+
+        binding.botonAgregar.setOnClickListener {
+            // Parte 2: aquí iremos al formulario
+            Toast.makeText(requireContext(), "Formulario próximamente", Toast.LENGTH_SHORT).show()
+        }
+
         binding.barraSuperior.setOnMenuItemClickListener { opcion ->
             when (opcion.itemId) {
                 R.id.accion_salir -> {
@@ -33,7 +59,6 @@ class ListaGastosFragment : Fragment(R.layout.fragment_lista_gastos) {
         }
     }
 
-    /** Pregunta antes de cerrar sesión, para evitar salidas por accidente. */
     private fun confirmarCierreSesion() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("¿Cerrar sesión?")
