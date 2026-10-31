@@ -44,8 +44,7 @@ class ListaGastosFragment : Fragment(R.layout.fragment_lista_gastos) {
         }
 
         binding.botonAgregar.setOnClickListener {
-            // Parte 2: aquí iremos al formulario
-            Toast.makeText(requireContext(), "Formulario próximamente", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.accion_lista_a_formulario)
         }
 
         binding.barraSuperior.setOnMenuItemClickListener { opcion ->

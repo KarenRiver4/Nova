@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_nova"
+    android:orientation="vertical">
+
+    <!-- Barra superior con flecha para volver -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/barra_superior"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/morado_principal"
+        android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar"
+        app:navigationContentDescription="Volver"
+        app:navigationIcon="@drawable/ic_volver"
+        app:navigationIconTint="@android:color/white"
+        app:title="Nuevo gasto"
+        app:titleTextColor="@android:color/white" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Concepto -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_concepto"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Concepto"
+                app:boxBackgroundColor="@android:color/white"
+                app:counterEnabled="true"
+                app:counterMaxLength="50">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/campo_concepto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Monto -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_monto"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Monto"
+                app:boxBackgroundColor="@android:color/white"
+                app:prefixText="$ ">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/campo_monto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Categoría (lista desplegable) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_categoria"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Categoría"
+                app:boxBackgroundColor="@android:color/white">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/campo_categoria"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Fecha (abre un calendario) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_fecha"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Fecha"
+                app:boxBackgroundColor="@android:color/white"
+                app:endIconContentDescription="Abrir calendario"
+                app:endIconDrawable="@drawable/ic_calendario"
+                app:endIconMode="custom">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/campo_fecha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Método de pago (lista desplegable) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_metodo_pago"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Método de pago"
+                app:boxBackgroundColor="@android:color/white">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/campo_metodo_pago"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Notas (opcional, varias líneas) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_notas"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Notas (opcional)"
+                app:boxBackgroundColor="@android:color/white"
+                app:counterEnabled="true"
+                app:counterMaxLength="200">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/campo_notas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:minLines="3" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Botón Guardar -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/boton_guardar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@color/morado_principal"
+                android:text="Guardar"
+                android:textSize="16sp"
+                app:cornerRadius="12dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

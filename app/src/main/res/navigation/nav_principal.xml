@@ -45,6 +45,16 @@
             app:destination="@id/inicioSesionFragment"
             app:popUpTo="@id/nav_principal"
             app:popUpToInclusive="true" />
+        <!-- Flecha: botón + → formulario -->
+        <action
+            android:id="@+id/accion_lista_a_formulario"
+            app:destination="@id/formularioGastoFragment" />
     </fragment>
 
+    <!-- Pantalla del formulario de gasto -->
+    <fragment
+        android:id="@+id/formularioGastoFragment"
+        android:name="com.karen.nova.ui.formulario.FormularioGastoFragment"
+        android:label="Formulario"
+        tools:layout="@layout/fragment_formulario_gasto" />
 </navigation>
