@@ -17,6 +17,7 @@
         app:navigationIcon="@drawable/ic_volver"
         app:navigationIconTint="@android:color/white"
         app:title="Detalle del gasto"
+        app:titleTextAppearance="@style/TextoBarraNova"
         app:titleTextColor="@android:color/white" />
 
     <ScrollView

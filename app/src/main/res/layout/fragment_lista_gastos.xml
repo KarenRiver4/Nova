@@ -15,6 +15,7 @@
         android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar"
         app:menu="@menu/menu_lista"
         app:title="Mis gastos"
+        app:titleTextAppearance="@style/TextoBarraNova"
         app:titleTextColor="@android:color/white" />
 
     <FrameLayout

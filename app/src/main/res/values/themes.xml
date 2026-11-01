@@ -3,7 +3,18 @@
     <style name="Base.Theme.Nova" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        S<!-- Tipografía de Nova en toda la app -->
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="fontFamily">@font/poppins</item>
     </style>
 
     <style name="Theme.Nova" parent="Base.Theme.Nova" />
+
+    <!-- Título de las barras superiores con Poppins -->
+    <style name="TextoBarraNova" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="fontFamily">@font/poppins</item>
+    </style>
+
 </resources>

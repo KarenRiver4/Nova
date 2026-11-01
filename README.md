@@ -14,6 +14,7 @@ Escogí el dominio de gastos personales porque es un problema cotidiano, fácil 
 ## Funcionalidades principales
 
 - **Registro e inicio de sesión local**, con validación de formularios: correo con formato válido, contraseña de mínimo 6 caracteres, confirmación de contraseña y verificación de que el correo no esté registrado.
+- **Contraseñas protegidas**: se almacenan como hash SHA-256, nunca en texto plano.
 - **Sesión persistente**: la aplicación recuerda al usuario autenticado aunque se cierre.
 - **Listado de gastos** con el total del mes y un estado vacío cuando no hay registros.
 - **CRUD completo**: crear, consultar, editar y eliminar gastos, con confirmación antes de eliminar.
@@ -35,6 +36,7 @@ Escogí el dominio de gastos personales porque es un problema cotidiano, fácil 
 | Navegación | Navigation Component 2.10.2 |
 | Ciclo de vida | ViewModel y LiveData 2.11.0 |
 | Interfaz | Material Components y ViewBinding |
+| Tipografía | Poppins (Google Fonts) |
 
 ## Instalación y ejecución
 
@@ -48,68 +50,4 @@ Escogí el dominio de gastos personales porque es un problema cotidiano, fácil 
 
 2. Abrir Android Studio, seleccionar **Open** y elegir la carpeta `Nova`.
 
-3. Esperar a que finalice la sincronización de Gradle. La primera vez puede tardar varios minutos, ya que se descargan las dependencias, por lo que se requiere conexión a internet.
-
-4. Desde el **Device Manager**, iniciar un emulador con Android 7.0 (API 24) o superior. El proyecto fue probado en un emulador *Medium Phone* con API 37.
-
-5. Ejecutar la aplicación con el botón **Run** ▶.
-
-### Consideraciones
-
-- La base de datos es local, por lo que en una instalación nueva no existen usuarios. Es necesario registrarse antes de iniciar sesión.
-- El cálculo del **total del mes** utiliza la fecha del dispositivo. Si el emulador está configurado en la zona horaria UTC, los gastos registrados en la noche pueden quedar en un mes distinto al esperado. Se recomienda configurar la zona horaria de Bogotá en *Settings → System → Date & time* del emulador.
-- Si el emulador deja de responder, se puede apagar desde el **Device Manager** e iniciarlo nuevamente con la opción **Cold Boot Now**.
-
-## Uso de la aplicación
-
-1. Al abrir la aplicación se muestra la pantalla de inicio de sesión. Si el usuario no tiene cuenta, debe seleccionar **"¿No tienes cuenta? Regístrate"**.
-2. Después de registrarse, se regresa a la pantalla de inicio de sesión para ingresar con el correo y la contraseña creados.
-3. En la pantalla **Mis gastos**, el botón **+** permite agregar un gasto. Los campos obligatorios son concepto, monto, categoría, fecha y método de pago; las notas son opcionales.
-4. Al seleccionar un gasto se abre su detalle, desde donde es posible **editarlo, compartirlo o eliminarlo**.
-5. Para cerrar sesión se utiliza la opción **Salir** de la barra superior.
-
-## Arquitectura
-
-La aplicación sigue el patrón **MVVM (Model – View – ViewModel)**, que separa las responsabilidades de cada capa:
-
-- **View** (Fragments y layouts XML): muestran la información y capturan las acciones del usuario.
-- **ViewModel**: contiene la lógica de cada pantalla y las validaciones, y comunica los cambios a la vista mediante LiveData.
-- **Repositorio**: actúa como intermediario entre los ViewModels y la base de datos.
-- **Model / Room**: entidades, DAOs y la clase de la base de datos, encargados de la persistencia local.
-
-La navegación se implementó con **Navigation Component** bajo un esquema de una sola Activity (`MainActivity`) que aloja los distintos Fragments.
-
-### Estructura de paquetes
-
-```
-com.karen.nova
-  datos/local         Entidades (Usuario, Gasto), DAOs y BaseDatosNova
-  datos/repositorio   RepositorioUsuario y RepositorioGasto
-  ui/autenticacion    Inicio de sesión y registro
-  ui/lista            Lista de gastos y su adaptador
-  ui/detalle          Detalle de un gasto
-  ui/formulario       Formulario para crear y editar gastos
-  utilidades          GestorSesion, Formato y Opciones
-  MainActivity        Contenedor de la navegación
-```
-
-## Modelo de datos
-
-La base de datos cuenta con dos tablas:
-
-- **usuarios**: id, nombre, correo (único), contrasena y fechaCreacion.
-- **gastos**: id, usuarioId, concepto, monto, categoria, fecha, metodoPago, notas (opcional) y fechaCreacion.
-
-La relación entre ambas es de **uno a muchos**: un usuario puede tener varios gastos. La columna `usuarioId` es una llave foránea hacia la tabla `usuarios`, configurada con eliminación en cascada.
-
-Algunas decisiones de diseño:
-
-- El **monto** se almacena como número entero (`Long`), ya que en pesos colombianos no se manejan centavos y así se evitan errores de precisión propios de los decimales.
-- Las **fechas** se guardan en milisegundos, lo que facilita ordenarlas y filtrarlas.
-- La **sesión** se guarda en SharedPreferences, almacenando únicamente el id del usuario autenticado.
-
-## Posibles mejoras
-
-- Almacenar las contraseñas cifradas mediante una función hash.
-- Agregar filtros de gastos por categoría y por mes.
-- Incorporar la tipografía Poppins definida en el diseño original realizado en Figma.
+3. Esperar a que finalice la

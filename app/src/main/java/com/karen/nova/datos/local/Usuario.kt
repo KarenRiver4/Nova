@@ -19,6 +19,7 @@ data class Usuario(
 
     val nombre: String,
     val correo: String,
+    // Guarda el hash SHA-256 de la contraseña, nunca el texto original
     val contrasena: String,
 
     // Fecha de registro, guardada como milisegundos.

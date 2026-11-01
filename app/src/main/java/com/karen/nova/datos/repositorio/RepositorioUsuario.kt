@@ -3,6 +3,7 @@ package com.karen.nova.datos.repositorio
 import android.database.sqlite.SQLiteConstraintException
 import com.karen.nova.datos.local.Usuario
 import com.karen.nova.datos.local.UsuarioDao
+import com.karen.nova.utilidades.Seguridad
 
 /**
  * Intermediario entre las pantallas y la tabla de usuarios.
@@ -18,7 +19,8 @@ class RepositorioUsuario(private val usuarioDao: UsuarioDao) {
         val usuario = Usuario(
             nombre = nombre.trim(),
             correo = normalizarCorreo(correo),
-            contrasena = contrasena
+            // Guardamos el hash, nunca la contraseña original
+            contrasena = Seguridad.hashear(contrasena)
         )
         return try {
             usuarioDao.insertar(usuario)
@@ -34,7 +36,8 @@ class RepositorioUsuario(private val usuarioDao: UsuarioDao) {
      */
     suspend fun iniciarSesion(correo: String, contrasena: String): Usuario? {
         val usuario = usuarioDao.buscarPorCorreo(normalizarCorreo(correo))
-        return if (usuario != null && usuario.contrasena == contrasena) usuario else null
+        // Comparamos la huella de lo que escribió el usuario con la guardada
+        return if (usuario != null && usuario.contrasena == Seguridad.hashear(contrasena)) usuario else null
     }
 
     /** Busca un usuario por su id (por ejemplo, para mostrar su nombre). */
