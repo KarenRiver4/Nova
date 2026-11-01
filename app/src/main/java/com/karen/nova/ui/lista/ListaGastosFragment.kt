@@ -11,7 +11,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.karen.nova.R
 import com.karen.nova.databinding.FragmentListaGastosBinding
 import com.karen.nova.utilidades.Formato
-import androidx.core.os.bundleOf
 
 /** Pantalla con la lista de gastos, el total del mes y el botón para agregar. */
 class ListaGastosFragment : Fragment(R.layout.fragment_lista_gastos) {
@@ -25,7 +24,7 @@ class ListaGastosFragment : Fragment(R.layout.fragment_lista_gastos) {
         // Vamos al detalle enviando el id del gasto tocado
         findNavController().navigate(
             R.id.accion_lista_a_detalle,
-            bundleOf("gastoId" to gasto.id)
+            Bundle().apply { putLong("gastoId", gasto.id) }
         )
     }
 

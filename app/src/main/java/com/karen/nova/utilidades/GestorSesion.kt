@@ -30,9 +30,20 @@ class GestorSesion(context: Context) {
         preferencias.edit { remove(CLAVE_USUARIO_ID) }
     }
 
+    /** Responde si el usuario ya vio la pantalla de bienvenida. */
+    fun bienvenidaYaVista(): Boolean =
+        preferencias.getBoolean(CLAVE_BIENVENIDA, false)
+
+    /** Anota que la bienvenida ya se mostró, para no repetirla. */
+    fun marcarBienvenidaVista() {
+        preferencias.edit { putBoolean(CLAVE_BIENVENIDA, true) }
+    }
+
     companion object {
         private const val NOMBRE_ARCHIVO = "sesion_nova"
         private const val CLAVE_USUARIO_ID = "usuario_id"
+
+        private const val CLAVE_BIENVENIDA = "bienvenida_vista"
 
         // Valor que significa "no hay sesión". Los ids reales empiezan en 1.
         const val SIN_SESION = -1L

@@ -3,9 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_principal"
-    app:startDestination="@id/inicioSesionFragment">
+    app:startDestination="@id/bienvenidaFragment">
 
-    <!-- Pantalla de inicio de sesión: es la primera que se muestra -->
+    <!-- Pantalla de bienvenida: es la primera que se muestra -->
+    <fragment
+        android:id="@+id/bienvenidaFragment"
+        android:name="com.karen.nova.ui.bienvenida.BienvenidaFragment"
+        android:label="Bienvenida"
+        tools:layout="@layout/fragment_bienvenida">
+
+        <!-- Flecha: "Comenzar". Borra la bienvenida del historial -->
+        <action
+            android:id="@+id/accion_bienvenida_a_inicioSesion"
+            app:destination="@id/inicioSesionFragment"
+            app:popUpTo="@id/nav_principal"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Pantalla de inicio de sesión: -->
     <fragment
         android:id="@+id/inicioSesionFragment"
         android:name="com.karen.nova.ui.autenticacion.InicioSesionFragment"

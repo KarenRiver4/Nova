@@ -13,7 +13,6 @@ import com.karen.nova.R
 import com.karen.nova.databinding.FragmentDetalleGastoBinding
 import com.karen.nova.datos.local.Gasto
 import com.karen.nova.utilidades.Formato
-import androidx.core.os.bundleOf
 
 /** Pantalla de detalle: muestra un gasto con las acciones Editar, Compartir y Eliminar. */
 class DetalleGastoFragment : Fragment(R.layout.fragment_detalle_gasto) {
@@ -41,7 +40,7 @@ class DetalleGastoFragment : Fragment(R.layout.fragment_detalle_gasto) {
             viewModel.gasto.value?.let { gasto ->
                 findNavController().navigate(
                     R.id.accion_detalle_a_formulario,
-                    bundleOf("gastoId" to gasto.id)
+                    Bundle().apply { putLong("gastoId", gasto.id) }
                 )
             }
         }
