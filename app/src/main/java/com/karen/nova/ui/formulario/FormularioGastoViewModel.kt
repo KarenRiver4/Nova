@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.karen.nova.datos.local.BaseDatosNova
 import com.karen.nova.datos.local.Gasto
@@ -13,22 +14,50 @@ import com.karen.nova.utilidades.Opciones
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
-/** Lógica del formulario: guarda la fecha elegida, valida los campos y guarda el gasto. */
-class FormularioGastoViewModel(application: Application) : AndroidViewModel(application) {
+/**
+ * Lógica del formulario. Sirve para CREAR un gasto nuevo
+ * o para EDITAR uno existente si recibe su id.
+ */
+class FormularioGastoViewModel(
+    application: Application,
+    estadoGuardado: SavedStateHandle
+) : AndroidViewModel(application) {
 
     private val repositorio = RepositorioGasto(
         BaseDatosNova.obtenerInstancia(application).gastoDao()
     )
     private val gestorSesion = GestorSesion(application)
 
-    // La fecha elegida en el calendario. Empieza en hoy.
+    // Si llega un id distinto de -1, estamos editando
+    private val gastoId: Long = estadoGuardado["gastoId"] ?: -1L
+    val esEdicion: Boolean = gastoId != -1L
+
+    // El gasto tal como estaba antes de editarlo
+    private var gastoOriginal: Gasto? = null
+
+    private val _gastoAEditar = MutableLiveData<Gasto?>()
+    val gastoAEditar: LiveData<Gasto?> = _gastoAEditar
+
     private val _fecha = MutableLiveData(System.currentTimeMillis())
     val fecha: LiveData<Long> = _fecha
 
     private val _estado = MutableLiveData<EstadoFormulario>(EstadoFormulario.Inicial)
     val estado: LiveData<EstadoFormulario> = _estado
 
-    /** Se llama cuando el usuario elige una fecha en el calendario. */
+    init {
+        // Al crearse en modo edición, cargamos el gasto para llenar el formulario
+        if (esEdicion) {
+            viewModelScope.launch {
+                val gasto = repositorio.buscarPorId(gastoId)
+                gastoOriginal = gasto
+                if (gasto != null) {
+                    _fecha.value = gasto.fecha
+                    _gastoAEditar.value = gasto
+                }
+            }
+        }
+    }
+
     fun cambiarFecha(nuevaFecha: Long) {
         _fecha.value = nuevaFecha
     }
@@ -49,19 +78,34 @@ class FormularioGastoViewModel(application: Application) : AndroidViewModel(appl
         }
 
         _estado.value = EstadoFormulario.Guardando
-        val gasto = Gasto(
-            usuarioId = gestorSesion.obtenerUsuarioId(),
-            concepto = concepto.trim(),
-            monto = montoTexto.toLong(),
-            categoria = categoria,
-            fecha = fechaElegida,
-            metodoPago = metodoPago,
-            notas = notas.trim().ifBlank { null }
-        )
-
         viewModelScope.launch {
             try {
-                repositorio.insertar(gasto)
+                val original = gastoOriginal
+                if (esEdicion && original != null) {
+                    // EDITAR: copiamos el original cambiando solo los datos del formulario.
+                    // Así se conservan el id, el dueño y la fecha de creación.
+                    val editado = original.copy(
+                        concepto = concepto.trim(),
+                        monto = montoTexto.toLong(),
+                        categoria = categoria,
+                        fecha = fechaElegida,
+                        metodoPago = metodoPago,
+                        notas = notas.trim().ifBlank { null }
+                    )
+                    repositorio.actualizar(editado)
+                } else {
+                    // CREAR: un gasto nuevo para el usuario de la sesión
+                    val nuevo = Gasto(
+                        usuarioId = gestorSesion.obtenerUsuarioId(),
+                        concepto = concepto.trim(),
+                        monto = montoTexto.toLong(),
+                        categoria = categoria,
+                        fecha = fechaElegida,
+                        metodoPago = metodoPago,
+                        notas = notas.trim().ifBlank { null }
+                    )
+                    repositorio.insertar(nuevo)
+                }
                 _estado.value = EstadoFormulario.Guardado
             } catch (e: Exception) {
                 _estado.value = EstadoFormulario.ErrorAlGuardar(
@@ -75,7 +119,6 @@ class FormularioGastoViewModel(application: Application) : AndroidViewModel(appl
         _estado.value = EstadoFormulario.Inicial
     }
 
-    /** Revisa cada campo y devuelve los errores encontrados. */
     private fun validar(
         concepto: String,
         montoTexto: String,
@@ -104,7 +147,6 @@ class FormularioGastoViewModel(application: Application) : AndroidViewModel(appl
         )
     }
 
-    /** El último milisegundo del día de hoy (23:59:59.999). */
     private fun finDeHoy(): Long = Calendar.getInstance().apply {
         set(Calendar.HOUR_OF_DAY, 23)
         set(Calendar.MINUTE, 59)

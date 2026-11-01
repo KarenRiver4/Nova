@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_nova"
+    android:orientation="vertical">
+
+    <!-- Barra superior con flecha para volver -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/barra_superior"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/morado_principal"
+        android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar"
+        app:navigationContentDescription="Volver"
+        app:navigationIcon="@drawable/ic_volver"
+        app:navigationIconTint="@android:color/white"
+        app:title="Detalle del gasto"
+        app:titleTextColor="@android:color/white" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Tarjeta principal: monto y concepto -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/morado_suave"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:id="@+id/texto_monto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/morado_principal"
+                        android:textSize="32sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/texto_concepto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/texto_nova"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Tarjeta de datos -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/morado_suave"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Fila: Categoría -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="10dp">
+
+                        <TextView
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:text="Categoría"
+                            android:textColor="#5F5E5A"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/texto_categoria"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/texto_nova"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <!-- Fila: Fecha -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="10dp">
+
+                        <TextView
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:text="Fecha"
+                            android:textColor="#5F5E5A"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/texto_fecha"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/texto_nova"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <!-- Fila: Método de pago -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="10dp">
+
+                        <TextView
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:text="Método de pago"
+                            android:textColor="#5F5E5A"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/texto_metodo_pago"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/texto_nova"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <!-- Fila: Notas -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="10dp">
+
+                        <TextView
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:text="Notas"
+                            android:textColor="#5F5E5A"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/texto_notas"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/texto_nova"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Botón Editar (principal) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/boton_editar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:backgroundTint="@color/morado_principal"
+                android:text="Editar"
+                android:textSize="16sp"
+                app:cornerRadius="12dp" />
+
+            <!-- Botón Compartir (borde morado) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/boton_compartir"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:text="Compartir"
+                android:textColor="@color/morado_principal"
+                android:textSize="16sp"
+                app:cornerRadius="12dp"
+                app:strokeColor="@color/morado_principal" />
+
+            <!-- Botón Eliminar (borde rojo) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/boton_eliminar"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:text="Eliminar"
+                android:textColor="@color/error_nova"
+                android:textSize="16sp"
+                app:cornerRadius="12dp"
+                app:strokeColor="@color/error_nova" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

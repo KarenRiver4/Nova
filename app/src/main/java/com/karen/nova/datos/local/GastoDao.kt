@@ -34,4 +34,8 @@ interface GastoDao {
     // LEER (uno): un gasto específico, para la pantalla de Detalle y para Editar
     @Query("SELECT * FROM gastos WHERE id = :id LIMIT 1")
     fun obtenerGastoPorId(id: Long): LiveData<Gasto?>
+
+    // Busca un gasto una sola vez (no "vivo"), para llenar el formulario al editar
+    @Query("SELECT * FROM gastos WHERE id = :id LIMIT 1")
+    suspend fun buscarPorId(id: Long): Gasto?
 }

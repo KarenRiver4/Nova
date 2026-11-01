@@ -26,4 +26,7 @@ class RepositorioGasto(private val gastoDao: GastoDao) {
 
     /** Elimina un gasto. */
     suspend fun eliminar(gasto: Gasto) = gastoDao.eliminar(gasto)
+
+    /** Busca un gasto una sola vez, para el formulario de edición. */
+    suspend fun buscarPorId(id: Long): Gasto? = gastoDao.buscarPorId(id)
 }

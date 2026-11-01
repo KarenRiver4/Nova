@@ -51,10 +51,42 @@
             app:destination="@id/formularioGastoFragment" />
     </fragment>
 
-    <!-- Pantalla del formulario de gasto -->
+    <!-- Flecha: tocar un gasto → detalle -->
+    <action
+        android:id="@+id/accion_lista_a_detalle"
+        app:destination="@id/detalleGastoFragment" />
+
+    <!-- Pantalla del formulario de gasto (crear o editar) -->
     <fragment
         android:id="@+id/formularioGastoFragment"
         android:name="com.karen.nova.ui.formulario.FormularioGastoFragment"
         android:label="Formulario"
-        tools:layout="@layout/fragment_formulario_gasto" />
+        tools:layout="@layout/fragment_formulario_gasto">
+
+        <!-- -1 = crear un gasto nuevo; otro número = editar ese gasto -->
+        <argument
+            android:name="gastoId"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
+
+    <!-- Pantalla de detalle de un gasto -->
+    <fragment
+        android:id="@+id/detalleGastoFragment"
+        android:name="com.karen.nova.ui.detalle.DetalleGastoFragment"
+        android:label="Detalle"
+        tools:layout="@layout/fragment_detalle_gasto">
+
+        <!-- Dato que recibe esta pantalla: el id del gasto -->
+        <argument
+            android:name="gastoId"
+            app:argType="long" />
+
+        <!-- Flecha: botón Editar → formulario -->
+        <action
+            android:id="@+id/accion_detalle_a_formulario"
+            app:destination="@id/formularioGastoFragment" />
+
+    </fragment>
+
 </navigation>

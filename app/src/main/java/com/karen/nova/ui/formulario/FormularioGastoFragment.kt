@@ -16,6 +16,7 @@ import com.karen.nova.utilidades.Formato
 import com.karen.nova.utilidades.Opciones
 import java.util.Calendar
 import java.util.TimeZone
+import com.karen.nova.datos.local.Gasto
 
 /** Pantalla del formulario para crear un gasto. */
 class FormularioGastoFragment : Fragment(R.layout.fragment_formulario_gasto) {
@@ -60,6 +61,20 @@ class FormularioGastoFragment : Fragment(R.layout.fragment_formulario_gasto) {
         viewModel.estado.observe(viewLifecycleOwner) { estado ->
             mostrarEstado(estado)
         }
+
+        // En modo edición, cambiamos los textos de la pantalla
+        if (viewModel.esEdicion) {
+            binding.barraSuperior.title = "Editar gasto"
+            binding.botonGuardar.text = "Guardar cambios"
+        }
+
+        // Llenamos los campos con el gasto a editar (solo la primera vez,
+        // para no borrar lo que el usuario haya cambiado si gira el celular)
+        if (savedInstanceState == null) {
+            viewModel.gastoAEditar.observe(viewLifecycleOwner) { gasto ->
+                if (gasto != null) llenarCampos(gasto)
+            }
+        }
     }
 
     private fun mostrarEstado(estado: EstadoFormulario) {
@@ -84,11 +99,22 @@ class FormularioGastoFragment : Fragment(R.layout.fragment_formulario_gasto) {
             }
 
             is EstadoFormulario.Guardado -> {
-                Toast.makeText(requireContext(), "Gasto guardado", Toast.LENGTH_SHORT).show()
+                val mensaje = if (viewModel.esEdicion) "Cambios guardados" else "Gasto guardado"
+                Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show()
                 viewModel.reiniciarEstado()
                 findNavController().popBackStack()
             }
         }
+    }
+
+    /** Pone en los campos los datos del gasto que se va a editar. */
+    private fun llenarCampos(gasto: Gasto) {
+        binding.campoConcepto.setText(gasto.concepto)
+        binding.campoMonto.setText(gasto.monto.toString())
+        // El "false" evita que la lista desplegable se abra filtrada
+        binding.campoCategoria.setText(gasto.categoria, false)
+        binding.campoMetodoPago.setText(gasto.metodoPago, false)
+        binding.campoNotas.setText(gasto.notas ?: "")
     }
 
     private fun limpiarErrores() {

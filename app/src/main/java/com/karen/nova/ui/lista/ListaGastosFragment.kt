@@ -11,6 +11,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.karen.nova.R
 import com.karen.nova.databinding.FragmentListaGastosBinding
 import com.karen.nova.utilidades.Formato
+import androidx.core.os.bundleOf
 
 /** Pantalla con la lista de gastos, el total del mes y el botón para agregar. */
 class ListaGastosFragment : Fragment(R.layout.fragment_lista_gastos) {
@@ -21,8 +22,11 @@ class ListaGastosFragment : Fragment(R.layout.fragment_lista_gastos) {
     private val viewModel: ListaGastosViewModel by viewModels()
 
     private val adaptador = AdaptadorGastos { gasto ->
-        // Parte 3: aquí iremos al detalle del gasto
-        Toast.makeText(requireContext(), "Detalle de: ${gasto.concepto}", Toast.LENGTH_SHORT).show()
+        // Vamos al detalle enviando el id del gasto tocado
+        findNavController().navigate(
+            R.id.accion_lista_a_detalle,
+            bundleOf("gastoId" to gasto.id)
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
