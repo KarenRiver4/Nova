@@ -1,7 +1,7 @@
 # Nova · Aplicación móvil para el control de gastos personales
 
 **Proyecto final – Desarrollo Web y Móvil**
-**Autora:** Karen Rivera
+**Autora:** Karen Dayanna Rivera Gómez
 
 ## Descripción
 
